@@ -43,6 +43,22 @@ namespace LabTp
 
         }
 
+        public PlaneWithRadar(string info) : base(info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 8)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+                DopColor = Color.FromName(strs[3]);
+                Radar = Convert.ToBoolean(strs[4]);
+                OsnOpane = Convert.ToBoolean(strs[5]);
+                Kol = Convert.ToBoolean(strs[6]);
+            }
+        }
+
+
         public override void DrawPlane(Graphics g)
         {
             Pen pen = new Pen(Color.Black);
@@ -67,6 +83,12 @@ namespace LabTp
             Brush kol = new SolidBrush(MainColor);
             g.FillEllipse(kol, _startPosX + 70, _startPosY + 116, 20, 20);
             g.FillEllipse(kol, _startPosX + 20, _startPosY + 116, 20, 20);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + ";" + DopColor.Name + ";" + Radar + ";" +
+           OsnOpane + ";" + Kol;
         }
     }
 }
