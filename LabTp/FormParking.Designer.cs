@@ -85,6 +85,7 @@
             this.buttonTake.TabIndex = 2;
             this.buttonTake.Text = "забрать";
             this.buttonTake.UseVisualStyleBackColor = true;
+            this.buttonTake.Click += new System.EventHandler(this.buttonTake_Click);
             // 
             // maskedTextBoxNomber
             // 
@@ -145,14 +146,12 @@
             this.сохранитьToolStripMenuItem1.Name = "сохранитьToolStripMenuItem1";
             this.сохранитьToolStripMenuItem1.Size = new System.Drawing.Size(182, 30);
             this.сохранитьToolStripMenuItem1.Text = "Сохранить";
-            this.сохранитьToolStripMenuItem1.Click += new System.EventHandler(this.сохранитьToolStripMenuItem1_Click);
             // 
             // загрузитьToolStripMenuItem
             // 
             this.загрузитьToolStripMenuItem.Name = "загрузитьToolStripMenuItem";
             this.загрузитьToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
             this.загрузитьToolStripMenuItem.Text = "Загрузить";
-            this.загрузитьToolStripMenuItem.Click += new System.EventHandler(this.загрузитьToolStripMenuItem_Click_1);
             // 
             // openFileDialog1
             // 
