@@ -14,13 +14,15 @@ namespace LabTp
     public partial class FormParking : Form
     {
 
+
         MultiLevelParking parking;
 
         FormPlaneConfig form;
 
-        private const int countLevel = 3;
+        private const int countLevel = 5;
 
         private Logger logger;
+
         public FormParking()
         {
             InitializeComponent();
@@ -41,7 +43,6 @@ namespace LabTp
             {
                 Bitmap bmp = new Bitmap(pictureBoxParking.Width,
                pictureBoxParking.Height);
-
                 Graphics gr = Graphics.FromImage(bmp);
                 parking[listBoxPlane.SelectedIndex].Draw(gr);
                 pictureBoxParking.Image = bmp;
@@ -49,7 +50,8 @@ namespace LabTp
         }
 
         private void buttonTake_Click(object sender, EventArgs e)
-        {
+        
+            {
             if (listBoxPlane.SelectedIndex > -1)
             {
                 if (maskedTextBoxNomber.Text != "")
@@ -65,9 +67,10 @@ namespace LabTp
                        pictureBoxTakePlanes.Height);
                         plane.DrawPlane(gr);
                         pictureBoxTakePlanes.Image = bmp;
-                        logger.Info("Изъят автомобиль " + plane.ToString() + " с места "
+                        logger.Info("Изъят самолет " + plane.ToString() + " с места "
                        + maskedTextBoxNomber.Text);
                         Draw();
+
                     }
                     catch (ParkingNotFoundException ex)
                     {
@@ -86,11 +89,10 @@ namespace LabTp
             }
         }
 
-        private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxPlane_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             Draw();
         }
-
 
         private void buttonSetPlane_Click(object sender, EventArgs e)
         {
@@ -106,14 +108,20 @@ namespace LabTp
                 try
                 {
                     int place = parking[listBoxPlane.SelectedIndex] + plane;
-                    logger.Info("Добавлен автомобиль " + plane.ToString() + " на место "
-                   + place);
+                    logger.Info("Добавлен самолет " + plane.ToString() + " на место "
+                    + place);
                     Draw();
                 }
                 catch (ParkingOverflowException ex)
                 {
                     MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK,
                    MessageBoxIcon.Error);
+                }
+                catch (ParkingAlreadyHaveException ex)
+                {
+
+                    MessageBox.Show(ex.Message, "Дублирование", MessageBoxButtons.OK,
+    MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -140,7 +148,6 @@ namespace LabTp
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
         }
 
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -165,11 +172,18 @@ namespace LabTp
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 Draw();
+
             }
         }
 
-      
-       
+        private void buttonSort_Click(object sender, EventArgs e)
+        {
+            parking.Sort();
+            Draw();
+            logger.Info("Сортировка уровней");
+        }
+
        
     }
 }
+

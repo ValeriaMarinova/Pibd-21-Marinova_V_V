@@ -10,10 +10,13 @@ namespace LabTp
     public class MultiLevelParking
     {
         List<Parking<ITransport>> parkingStages;
+
         private const int countPlaces = 5;
+
         private int pictureWidth;
 
         private int pictureHeight;
+
         public MultiLevelParking(int countStages, int pictureWidth, int pictureHeight)
         {
             parkingStages = new List<Parking<ITransport>>();
@@ -41,6 +44,7 @@ namespace LabTp
         public void SaveData(string filename)
         {
             if (File.Exists(filename))
+
             {
                 File.Delete(filename);
             }
@@ -53,24 +57,19 @@ namespace LabTp
                 {
 
                     WriteToFile("Level" + Environment.NewLine, fs);
-                    for (int i = 0; i < countPlaces; i++)
+                    foreach (ITransport plane in level)
                     {
-                        try
+
+                        if (plane.GetType().Name == "Plane")
                         {
-                            var plane = level[i];
-
-                            if (plane.GetType().Name == "Plane")
-                            {
-                                WriteToFile(i + ":Plane:", fs);
-                            }
-                            if (plane.GetType().Name == "PlaneWithRadar")
-                            {
-                                WriteToFile(i + ":PlaneWithRadar", fs);
-                            }
-
-                            WriteToFile(plane + Environment.NewLine, fs);
+                            WriteToFile(level.GetKey + ":Plane:", fs);
                         }
-                        finally { }
+                        if (plane.GetType().Name == "PlaneWithRadar")
+                        {
+                            WriteToFile(level.GetKey + ":PlaneWithRadar:", fs);
+                        }
+
+                        WriteToFile(plane + Environment.NewLine, fs);
                     }
                 }
             }
@@ -94,12 +93,12 @@ namespace LabTp
                 byte[] b = new byte[fs.Length];
                 UTF8Encoding temp = new UTF8Encoding(true);
                 while (fs.Read(b, 0, b.Length) > 0)
-
                 {
                     bufferTextFromFile += temp.GetString(b);
                 }
             }
             bufferTextFromFile = bufferTextFromFile.Replace("\r", "");
+
             var strs = bufferTextFromFile.Split('\n');
             if (strs[0].Contains("CountLeveles"))
             {
@@ -117,6 +116,7 @@ namespace LabTp
                 throw new Exception("Неверный формат файла");
             }
             int counter = -1;
+            int counterPlane = 0;
             ITransport plane = null;
             for (int i = 1; i < strs.Length; ++i)
             {
@@ -125,6 +125,7 @@ namespace LabTp
                 {
 
                     counter++;
+                    counterPlane = 0;
                     parkingStages.Add(new Parking<ITransport>(countPlaces,
                     pictureWidth, pictureHeight));
                     continue;
@@ -137,12 +138,18 @@ namespace LabTp
                 {
                     plane = new Plane(strs[i].Split(':')[2]);
                 }
-                else if (strs[i].Split(':')[1] == "planeWithRadar")
+                else if (strs[i].Split(':')[1] == "PlaneWithRadar")
                 {
                     plane = new PlaneWithRadar(strs[i].Split(':')[2]);
                 }
-                parkingStages[counter][Convert.ToInt32(strs[i].Split(':')[0])] = plane;
+                parkingStages[counter][counterPlane++] = plane;
             }
+        }
+
+        public void Sort()
+        {
+            parkingStages.Sort();
         }
     }
 }
+
