@@ -15,6 +15,8 @@ namespace LabTp
 
         MultiLevelParking parking;
 
+        FormPlaneConfig form;
+
         private const int countLevel = 5;
 
         public FormParking()
@@ -43,7 +45,7 @@ namespace LabTp
             }
         }
 
-        private void SetPlane_Click_1(object sender, EventArgs e)
+        private void SetPlane_Click(object sender, EventArgs e)
         {
             if (listBoxPlane.SelectedIndex > -1)
             {
@@ -62,7 +64,7 @@ namespace LabTp
             }
         }
 
-        private void buttonSetPlaneWithRadar_Click(object sender, EventArgs e)
+        private void SetPlaneWithRadar_Click(object sender, EventArgs e)
         {
             if (listBoxPlane.SelectedIndex > -1)
             {
@@ -87,7 +89,7 @@ namespace LabTp
             }
         }
 
-        private void buttonTake_Click(object sender, EventArgs e)
+        private void buttonTakeCar_Click(object sender, EventArgs e)
         {
             if (listBoxPlane.SelectedIndex > -1)
             {
@@ -117,16 +119,40 @@ namespace LabTp
         }
 
 
-        private void listBoxPlane_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
         {
 
             Draw();
 
         }
 
+        private void buttonSetPlane_Click(object sender, EventArgs e)
+        {
+            form = new FormPlaneConfig();
+            form.AddEvent(AddPlane);
+            form.Show();
+        }
+
+        private void AddPlane(ITransport plane)
+        {
+            if (plane != null && listBoxPlane.SelectedIndex > -1)
+            {
+                int place = parking[listBoxPlane.SelectedIndex] + plane;
+                if (place > -1)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Машину не удалось поставить");
+                }
+            }
+        }
+
       
        
     }
-    }
-    
+}
+
+
 
