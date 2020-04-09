@@ -14,16 +14,14 @@ namespace LabTp
         Left,
         Right
     }
-    public class Plane : Vehicle
+    public class Plane : Vehicle, IComparable<Plane>, IEquatable<Plane>
     {
 
 
         private const int planeWidth = 110;
 
         private const int planeHeight = 185;
-
-
-
+        
         public bool Kol { protected set; get; }
 
         public bool OsnPl { private set; get; }
@@ -34,6 +32,7 @@ bool radar, bool kol, bool osnPl)
             MaxSpeed = maxSpeed;
             Weight = weight;
             MainColor = mainColor;
+
             Kol = kol;
             OsnPl = osnPl;
         }
@@ -117,6 +116,74 @@ bool radar, bool kol, bool osnPl)
         public override string ToString()
         {
             return MaxSpeed + ";" + Weight + ";" + MainColor.Name;
+        }
+
+        public int CompareTo(Plane other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+            if (MaxSpeed != other.MaxSpeed)
+            {
+                return MaxSpeed.CompareTo(other.MaxSpeed);
+            }
+            if (Weight != other.Weight)
+            {
+                return Weight.CompareTo(other.Weight);
+            }
+            if (MainColor != other.MainColor)
+            {
+                MainColor.Name.CompareTo(other.MainColor.Name);
+            }
+            return 0;
+        }
+
+        public bool Equals(Plane other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            if (GetType().Name != other.GetType().Name)
+
+            {
+                return false;
+            }
+            if (MaxSpeed != other.MaxSpeed)
+            {
+                return false;
+            }
+            if (Weight != other.Weight)
+            {
+                return false;
+            }
+            if (MainColor != other.MainColor)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is Plane carObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(carObj);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

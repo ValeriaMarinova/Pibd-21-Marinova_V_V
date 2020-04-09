@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LabTp
 {
-    public class PlaneWithRadar : Plane
+    public class PlaneWithRadar : Plane, IComparable<PlaneWithRadar>, IEquatable<PlaneWithRadar>
     {
         public Color DopColor { private set; get; }
 
@@ -90,6 +90,85 @@ namespace LabTp
             return base.ToString() + ";" + DopColor.Name + ";" + Radar + ";" +
            OsnOpane + ";" + Kol;
         }
+
+        public int CompareTo(PlaneWithRadar other)
+        {
+            var res = (this is Plane).CompareTo(other is Plane);
+            if (res != 0)
+            {
+                return res;
+            }
+            if (DopColor != other.DopColor)
+            {
+                DopColor.Name.CompareTo(other.DopColor.Name);
+            }
+            if (Radar != other.Radar)
+            {
+                return Radar.CompareTo(other.Radar);
+            }
+            if (Kol != other.Kol)
+            {
+                return Kol.CompareTo(other.Kol);
+            }
+            if (OsnOpane != other.OsnOpane)
+            {
+                return OsnOpane.CompareTo(other.OsnOpane);
+            }
+            return 0;
+        }
+
+        public bool Equals(PlaneWithRadar other)
+        {
+            var res = (this as Plane).Equals(other as Plane);
+            if (!res)
+            {
+                return res;
+            }
+            if (GetType().Name != other.GetType().Name)
+            {
+                return false;
+            }
+            if (DopColor != other.DopColor)
+            {
+                return false;
+            }
+            if (Radar != other.Radar)
+            {
+                return false;
+            }
+
+            if (Kol != other.Kol)
+            {
+                return false;
+            }
+            if (OsnOpane != other.OsnOpane)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is PlaneWithRadar carObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(carObj);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
+
 
