@@ -16,7 +16,7 @@ namespace LabTp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormPlane());
+            Application.Run(new FormParking());
         }
     }
 }
