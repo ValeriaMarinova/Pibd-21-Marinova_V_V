@@ -9,20 +9,12 @@ namespace LabTp
 {
     public class Parking<T> where T : class, ITransport
     {
-
         private Dictionary<int, T> _places;
-
         private int _maxCount;
-
-
         private int PictureWidth { get; set; }
-
         private int PictureHeight { get; set; }
-
         private const int _placeSizeWidth = 350;
-
         private const int _placeSizeHeight = 150;
-
         public Parking(int sizes, int pictureWidth, int pictureHeight)
         {
             _maxCount = sizes;
@@ -31,12 +23,11 @@ namespace LabTp
             PictureHeight = pictureHeight;
 
         }
-
         public static int operator +(Parking<T> p, T plane)
         {
             if (p._places.Count == p._maxCount)
             {
-                return -1;
+                throw new ParkingOverflowException();
             }
             for (int i = 0; i < p._maxCount; i++)
             {
@@ -51,9 +42,7 @@ namespace LabTp
             }
             return -1;
         }
-
-
-
+        
         public static T operator -(Parking<T> p, int index)
         {
             if (!p.CheckFreePlace(index))
@@ -63,7 +52,7 @@ namespace LabTp
 
                 return plane;
             }
-            return null;
+            throw new ParkingNotFoundException(index);
 
         }
 
@@ -89,7 +78,7 @@ namespace LabTp
             g.DrawRectangle(pen, 0, 0, (_maxCount / 5) * _placeSizeWidth, 630);
             for (int i = 0; i < _maxCount / 5; i++)
             {
-                for (int j = 0; j < 10; ++j)
+                for (int j = 0; j < 5; ++j)
                 {
                     g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight,
                     i * _placeSizeWidth + 110, j * _placeSizeHeight);
@@ -97,7 +86,6 @@ namespace LabTp
                 g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth, 400);
             }
         }
-
 
         public T this[int ind]
         {
@@ -107,7 +95,7 @@ namespace LabTp
                 {
                     return _places[ind];
                 }
-                return null;
+                throw new ParkingNotFoundException(ind);
             }
             set
             {
@@ -117,10 +105,15 @@ namespace LabTp
                     _places[ind].SetPosition(5 + ind / 5 * _placeSizeWidth + 5, ind % 5
                     * _placeSizeHeight + 15, PictureWidth, PictureHeight);
                 }
+                else
+                {
+                    throw new ParkingOccupiedPlaceException(ind);
+                }
             }
         }
     }
 }
+
 
 
 
