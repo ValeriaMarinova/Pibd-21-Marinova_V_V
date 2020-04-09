@@ -6,11 +6,11 @@ using System.Windows.Forms;
 
 namespace LabTp
 {
+    public delegate void planeDelegate(ITransport plane);
+
     static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
+
         [STAThread]
         static void Main()
         {
