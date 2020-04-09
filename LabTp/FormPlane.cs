@@ -12,12 +12,13 @@ namespace LabTp
 {
     public partial class FormPlane : Form
     {
-        private Plane plane;
+        private ITransport plane;
 
         public FormPlane()
         {
             InitializeComponent();
         }
+
 
         private void Draw()
         {
@@ -27,21 +28,27 @@ namespace LabTp
             pictureBoxPlane.Image = bmp;
         }
 
-
-        private void buttonCreate_Click(object sender, EventArgs e)
+        private void buttonCreatePlane_Click_1(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            plane = new Plane(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue,
-           Color.Yellow, true, true, true);
+            plane = new Plane(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue);
             plane.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxPlane.Width,
            pictureBoxPlane.Height);
             Draw();
         }
 
-
+        private void buttonCreatePlaneWithRadar_Click_1(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            plane = new PlaneWithRadar(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue, Color.Yellow, true, true, true);
+            plane.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxPlane.Width,
+           pictureBoxPlane.Height);
+            Draw();
+        }
 
         private void buttonMove_Click(object sender, EventArgs e)
         {
+
             string name = (sender as Button).Name;
             switch (name)
             {
@@ -59,9 +66,12 @@ namespace LabTp
                     break;
             }
             Draw();
+
+      
+
         }
 
        
-       
     }
 }
+
