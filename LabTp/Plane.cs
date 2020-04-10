@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LabTp
-{
-   
+{   
     public class Plane : Vehicle
     {
         private const int planeWidth = 110;
