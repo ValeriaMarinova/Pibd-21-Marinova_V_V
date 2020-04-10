@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LabTp
 {
     
-    class Plane
+   public class Plane
     {
 
         private float _startPosX;
