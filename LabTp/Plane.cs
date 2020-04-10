@@ -10,7 +10,6 @@ namespace LabTp
    
     public class Plane : Vehicle
     {
-
         private const int planeWidth = 110;
 
         private const int planeHeight = 185;
