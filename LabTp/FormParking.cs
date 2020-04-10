@@ -12,78 +12,121 @@ namespace LabTp
 {
     public partial class FormParking : Form
     {
-        Parking<ITransport> parking;
+
+        MultiLevelParking parking;
+
+        private const int countLevel = 5;
+
         public FormParking()
+
         {
             InitializeComponent();
-            parking = new Parking<ITransport>(20, pictureBoxParking.Width,
+            parking = new MultiLevelParking(countLevel, pictureBoxParking.Width,
            pictureBoxParking.Height);
-            Draw();
+            for (int i = 0; i < countLevel; i++)
+            {
+                listBoxPlane.Items.Add("Уровень " + (i + 1));
+            }
+            listBoxPlane.SelectedIndex = 0;
         }
 
         private void Draw()
         {
-            Bitmap bmp = new Bitmap(pictureBoxParking.Width, pictureBoxParking.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            parking.Draw(gr);
-            pictureBoxParking.Image = bmp;
+            if (listBoxPlane.SelectedIndex > -1)
+            {
+
+                Bitmap bmp = new Bitmap(pictureBoxParking.Width,
+               pictureBoxParking.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                parking[listBoxPlane.SelectedIndex].Draw(gr);
+                pictureBoxParking.Image = bmp;
+            }
         }
 
         private void SetPlane_Click_1(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (listBoxPlane.SelectedIndex > -1)
             {
-                var plane = new Plane(100, 1000, dialog.Color);
-                int place = parking + plane;
-                Draw();
-            }
-        }
-
-
-        private void buttonSetPlaneWithRadar_Click(object sender, EventArgs e)
-        {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                ColorDialog dialogDop = new ColorDialog();
-                if (dialogDop.ShowDialog() == DialogResult.OK)
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    var plane = new PlaneWithRadar(100, 1000, dialog.Color, dialogDop.Color,
-                   true, true, true);
-                    int place = parking + plane;
+                    var plane = new Plane(100, 1000, dialog.Color);
+                    int place = parking[listBoxPlane.SelectedIndex] + plane;
+                    if (place == -1)
+                    {
+                        MessageBox.Show("Нет свободных мест", "Ошибка",
+                       MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     Draw();
                 }
             }
         }
 
-        private void buttonTake_Click_1(object sender, EventArgs e)
+        private void buttonSetPlaneWithRadar_Click(object sender, EventArgs e)
         {
-            if (maskedTextBoxNomber.Text != "")
+            if (listBoxPlane.SelectedIndex > -1)
             {
-                var plane = parking - Convert.ToInt32(maskedTextBoxNomber.Text);
-                if (plane != null)
+
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    Bitmap bmp = new Bitmap(pictureBoxTakePlanes.Width,
-                   pictureBoxTakePlanes.Height);
-                    Graphics gr = Graphics.FromImage(bmp);
-                    plane.SetPosition(5, 5, pictureBoxTakePlanes.Width,
-                   pictureBoxTakePlanes.Height);
-                    plane.DrawPlane(gr);
-                    pictureBoxTakePlanes.Image = bmp;
+                    ColorDialog dialogDop = new ColorDialog();
+                    if (dialogDop.ShowDialog() == DialogResult.OK)
+                    {
+                        var plane = new PlaneWithRadar(100, 1000, dialog.Color,
+                       dialogDop.Color, true, true, true);
+                        int place = parking[listBoxPlane.SelectedIndex] + plane;
+                        if (place == -1)
+                        {
+                            MessageBox.Show("Нет свободных мест", "Ошибка",
+                           MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        Draw();
+                    }
                 }
-                else
-                {
-                    Bitmap bmp = new Bitmap(pictureBoxTakePlanes.Width,
-                   pictureBoxTakePlanes.Height);
-                    pictureBoxTakePlanes.Image = bmp;
-                }
-                Draw();
             }
         }
 
+        private void buttonTake_Click(object sender, EventArgs e)
+        {
+            if (listBoxPlane.SelectedIndex > -1)
+            {
+                if (maskedTextBoxNomber.Text != "")
+                {
+                    var plane = parking[listBoxPlane.SelectedIndex] -
+                   Convert.ToInt32(maskedTextBoxNomber.Text);
+                    if (plane != null)
+                    {
+                        Bitmap bmp = new Bitmap(pictureBoxTakePlanes.Width,
+                       pictureBoxTakePlanes.Height);
+                        Graphics gr = Graphics.FromImage(bmp);
+                        plane.SetPosition(5, 5, pictureBoxTakePlanes.Width,
+                       pictureBoxTakePlanes.Height);
+                        plane.DrawPlane(gr);
+                        pictureBoxTakePlanes.Image = bmp;
+                    }
+                    else
+                    {
+                        Bitmap bmp = new Bitmap(pictureBoxTakePlanes.Width,
+                       pictureBoxTakePlanes.Height);
+                        pictureBoxTakePlanes.Image = bmp;
+                    }
+                    Draw();
+                }
+            }
+        }
+
+
+        private void listBoxPlane_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            Draw();
+
+        }
+
+      
        
     }
-}
-
+    }
+    
 

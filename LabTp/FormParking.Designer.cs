@@ -36,6 +36,7 @@
             this.labelMesto = new System.Windows.Forms.Label();
             this.SetPlane = new System.Windows.Forms.Button();
             this.buttonSetPlaneWithRadar = new System.Windows.Forms.Button();
+            this.listBoxPlane = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxParking)).BeginInit();
             this.groupBoxParking.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTakePlanes)).BeginInit();
@@ -78,7 +79,7 @@
             this.buttonTake.TabIndex = 2;
             this.buttonTake.Text = "забрать";
             this.buttonTake.UseVisualStyleBackColor = true;
-            this.buttonTake.Click += new System.EventHandler(this.buttonTake_Click_1);
+            this.buttonTake.Click += new System.EventHandler(this.buttonTake_Click);
             // 
             // maskedTextBoxNomber
             // 
@@ -115,11 +116,22 @@
             this.buttonSetPlaneWithRadar.UseVisualStyleBackColor = true;
             this.buttonSetPlaneWithRadar.Click += new System.EventHandler(this.buttonSetPlaneWithRadar_Click);
             // 
+            // listBoxPlane
+            // 
+            this.listBoxPlane.FormattingEnabled = true;
+            this.listBoxPlane.ItemHeight = 20;
+            this.listBoxPlane.Location = new System.Drawing.Point(1013, 12);
+            this.listBoxPlane.Name = "listBoxPlane";
+            this.listBoxPlane.Size = new System.Drawing.Size(120, 144);
+            this.listBoxPlane.TabIndex = 7;
+            this.listBoxPlane.SelectedIndexChanged += new System.EventHandler(this.listBoxPlane_SelectedIndexChanged);
+            // 
             // FormParking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1205, 623);
+            this.Controls.Add(this.listBoxPlane);
             this.Controls.Add(this.buttonSetPlaneWithRadar);
             this.Controls.Add(this.SetPlane);
             this.Controls.Add(this.groupBoxParking);
@@ -144,5 +156,6 @@
         private System.Windows.Forms.Label labelMesto;
         private System.Windows.Forms.Button SetPlane;
         private System.Windows.Forms.Button buttonSetPlaneWithRadar;
+        private System.Windows.Forms.ListBox listBoxPlane;
     }
 }
