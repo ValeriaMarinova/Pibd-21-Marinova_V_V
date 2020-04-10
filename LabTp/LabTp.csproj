@@ -52,6 +52,7 @@
     <Compile Include="FormParking.Designer.cs">
       <DependentUpon>FormParking.cs</DependentUpon>
     </Compile>
+    <Compile Include="Direction.cs" />
     <Compile Include="FormPlane.cs">
       <SubType>Form</SubType>
     </Compile>

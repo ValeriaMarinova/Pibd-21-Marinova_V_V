@@ -6,25 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LabTp
-{
-    public enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
+{   
     public class Plane : Vehicle
     {
-
-       
-
         private const int planeWidth = 110;
 
         private const int planeHeight = 185;
-
-       
-
+        
         public Color DopColor { private set; get; }
 
         public bool Radar { private set; get; }
