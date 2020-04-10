@@ -7,13 +7,7 @@ using System.Threading.Tasks;
 
 namespace LabTp
 {
-    public enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
+    
     class Plane
     {
 
