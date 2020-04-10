@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LabTp
 {
-  
+   
     class Plane
     {
 
